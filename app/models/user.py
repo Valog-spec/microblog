@@ -1,7 +1,7 @@
 from sqlalchemy import Column, ForeignKey, Integer, Table
 from sqlalchemy.orm import Mapped, backref, mapped_column, relationship
 
-from app.models.database import Base
+from app.database.database import Base
 from app.models.like import Like
 from app.models.tweet import Tweet
 
@@ -14,6 +14,8 @@ followers = Table(
 
 
 class User(Base):
+    """Модель пользователя"""
+
     __tablename__ = "users"
 
     id: Mapped[int] = mapped_column(primary_key=True)

@@ -20,9 +20,7 @@ async def like_tweet(
     like_service: Annotated[LikeService, Depends(get_like_service)],
     current_user: User = Depends(get_current_user),
 ) -> SuccessResponseLikeSchema:
-    """
-    Эндпоинт для проставления лайка на твит
-    """
+    """Добавляет лайк текущего пользователя к указанному твиту"""
     return await like_service.create_like(user_id=current_user.id, tweet_id=tweet_id)
 
 
@@ -36,7 +34,5 @@ async def unlike_tweet(
     like_service: Annotated[LikeService, Depends(get_like_service)],
     current_user: User = Depends(get_current_user),
 ) -> SuccessResponseLikeSchema:
-    """
-    Эндпоинт для удаления лайка на твит
-    """
+    """Удаляет лайк текущего пользователя с указанного твита"""
     return await like_service.delete_like(user_id=current_user.id, tweet_id=tweet_id)

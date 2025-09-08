@@ -1,13 +1,12 @@
-from typing import Any, Coroutine, Sequence, List
+from typing import List, Sequence
 
-from sqlalchemy import Row, RowMapping, update
+from sqlalchemy import update
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
 
 from app.models.media import Media
 from app.models.tweet import Tweet
-from app.schemas.tweet import TweetCreateSchema
 
 
 class TweetRepository:
@@ -16,7 +15,9 @@ class TweetRepository:
     def __init__(self, db_session: AsyncSession) -> None:
         self.db_session = db_session
 
-    async def create_tweet(self, content: str, author_id: int, media_ids: List[int] = None) -> Tweet:
+    async def create_tweet(
+        self, content: str, author_id: int, media_ids: List[int] = None
+    ) -> Tweet:
         """Создать твит"""
         db_tweet = Tweet(content=content, author_id=author_id)
         self.db_session.add(db_tweet)

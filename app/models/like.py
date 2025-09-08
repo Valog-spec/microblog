@@ -1,10 +1,11 @@
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.models.database import Base
+from app.database.database import Base
 
 
 class Like(Base):
+    """Модель лайка пользователя на твите"""
 
     __tablename__ = "likes"
 

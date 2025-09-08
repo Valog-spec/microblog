@@ -31,7 +31,6 @@ class UserCreateRequestSchema(BaseModel):
     )
 
 
-
 class UserShortSchema(BaseModel):
     id: int
     name: str

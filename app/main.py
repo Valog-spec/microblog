@@ -4,11 +4,10 @@ from contextlib import asynccontextmanager
 import asyncpg
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
 from sqlalchemy.exc import OperationalError
 
+from app.database.database import AsyncSessionLocal, Base, engine
 from app.endpoints.api import routers
-from app.models.database import AsyncSessionLocal, Base, engine
 
 # @asynccontextmanager
 # async def lifespan(app: FastAPI):
@@ -57,4 +56,3 @@ app.add_middleware(
 # app.mount("/static", StaticFiles(directory="static"), name="static")
 
 app.include_router(routers)
-

@@ -2,8 +2,9 @@ import pytest
 
 
 @pytest.mark.asyncio
-async def test_create_tweet(test_client, test_user):
-    response = test_client.post(
+async def test_create_tweet(test_client, test_user) -> None:
+    """Тестирует создание нового твита."""
+    response = await test_client.post(
         "/api/tweets",
         json={"content": "Test tweet content"},
         headers={"api-key": test_user.api_key},
@@ -14,16 +15,20 @@ async def test_create_tweet(test_client, test_user):
 
 
 @pytest.mark.asyncio
-async def test_get_tweets_feed(test_client, test_user, test_tweet):
-    response = test_client.get("/api/tweets", headers={"api-key": test_user.api_key})
+async def test_get_tweets_feed(test_client, test_user, test_tweet) -> None:
+    """Тестирует получение ленты твитов."""
+    response = await test_client.get(
+        "/api/tweets", headers={"api-key": test_user.api_key}
+    )
     assert response.status_code == 200
     assert response.json()["result"] == True
     assert len(response.json()["tweets"]) >= 1
 
 
 @pytest.mark.asyncio
-async def test_like_tweet(test_client, test_user, test_tweet):
-    response = test_client.post(
+async def test_like_tweet(test_client, test_user, test_tweet) -> None:
+    """Тестирует добавление лайка к твиту."""
+    response = await test_client.post(
         f"/api/likes/{test_tweet.id}/likes", headers={"api-key": test_user.api_key}
     )
     assert response.status_code == 200
@@ -31,8 +36,9 @@ async def test_like_tweet(test_client, test_user, test_tweet):
 
 
 @pytest.mark.asyncio
-async def test_delete_tweet(test_client, test_user, test_tweet):
-    response = test_client.delete(
+async def test_delete_tweet(test_client, test_user, test_tweet) -> None:
+    """Тестирует удаление твита."""
+    response = await test_client.delete(
         f"/api/tweets/{test_tweet.id}", headers={"api-key": test_user.api_key}
     )
     assert response.status_code == 200

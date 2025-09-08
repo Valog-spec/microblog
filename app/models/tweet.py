@@ -1,10 +1,12 @@
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.models.database import Base
+from app.database.database import Base
 
 
 class Tweet(Base):
+    """Модель твита"""
+
     __tablename__ = "tweets"
 
     id: Mapped[int] = mapped_column(primary_key=True)

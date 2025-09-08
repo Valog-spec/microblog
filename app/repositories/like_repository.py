@@ -1,5 +1,3 @@
-from typing import Any, Coroutine
-
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 

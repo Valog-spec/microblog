@@ -6,12 +6,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.repositories.media_repository import MediaRepository
 from app.repositories.tweet_repository import TweetRepository
 from app.schemas.media import MediaBaseSchema
-from app.schemas.tweet import (
-    SuccessResponseTweetSchema,
-    TweetCreateSchema,
-    TweetSchema,
-    TweetsGetFeedSchema,
-)
+from app.schemas.tweet import (SuccessResponseTweetSchema, TweetSchema,
+                               TweetsGetFeedSchema)
 from app.schemas.user import UserShortSchema
 
 
@@ -32,7 +28,9 @@ class TweetService:
             for media_id in media_ids:
                 media = await self.media_repository.get_user_media(media_id, author_id)
                 if not media:
-                    raise Exception("Ничего не найдено, либо не принадлежит пользователю")
+                    raise Exception(
+                        "Ничего не найдено, либо не принадлежит пользователю"
+                    )
 
         tweet = await self.tweet_repository.create_tweet(content, author_id, media_ids)
 
