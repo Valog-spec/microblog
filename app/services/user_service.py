@@ -2,8 +2,12 @@ from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.repositories.user_repository import UserRepository
-from app.schemas.user import (SuccessResponseUserSchema, UserBaseSchema,
-                              UserCreateRequestSchema, UserProfileSchema)
+from app.schemas.user import (
+    SuccessResponseUserSchema,
+    UserBaseSchema,
+    UserCreateRequestSchema,
+    UserProfileSchema,
+)
 
 
 class UserService:

@@ -5,8 +5,12 @@ from fastapi import APIRouter, Depends
 from app.core.dependencies import get_current_user, get_user_service
 from app.logger.logger_helper import get_logger
 from app.models.user import User
-from app.schemas.user import (SuccessResponseUserSchema, UserBaseSchema,
-                              UserCreateRequestSchema, UserProfileSchema)
+from app.schemas.user import (
+    SuccessResponseUserSchema,
+    UserBaseSchema,
+    UserCreateRequestSchema,
+    UserProfileSchema,
+)
 from app.services.user_service import UserService
 
 router = APIRouter(prefix="/api/users", tags=["users"])

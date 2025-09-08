@@ -4,8 +4,11 @@ from fastapi import APIRouter, Depends
 
 from app.core.dependencies import get_current_user, get_tweet_service
 from app.models.user import User
-from app.schemas.tweet import (SuccessResponseTweetSchema, TweetCreateSchema,
-                               TweetsGetFeedSchema)
+from app.schemas.tweet import (
+    SuccessResponseTweetSchema,
+    TweetCreateSchema,
+    TweetsGetFeedSchema,
+)
 from app.services.tweet_service import TweetService
 
 router = APIRouter(prefix="/api/tweets", tags=["tweets"])
