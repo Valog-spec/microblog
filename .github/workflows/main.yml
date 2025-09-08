@@ -1,0 +1,46 @@
+name: CI with PDM
+
+on: [push, pull_request]
+
+jobs:
+  test_CI:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.13"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install PDM
+        run: pip install pdm
+
+      - name: Cache PDM dependencies
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-pdm
+        with:
+          path: |
+            .venv
+            __pypackages__/
+          key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('pdm.lock') }}
+
+      - name: Install dependencies
+        run: pdm install -d
+
+      - name: Run flake8
+        run: pdm run flake8 .
+        
+      - name: Run black
+        run: pdm run black --diff --check .
+        
+      - name: Run isort
+        run: pdm run isort --check-only --diff --profile black .
+        
+      - name: Run tests with pytest
+        run: pdm run pytest -v tests
