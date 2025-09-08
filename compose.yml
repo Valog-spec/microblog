@@ -1,0 +1,34 @@
+
+services:
+
+  db_postgres:
+    container_name: my_postgres
+    image: postgres:latest
+
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_LOG_DESTINATION: stderr
+      POSTGRES_LOGGING_COLLECTOR: on
+
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+
+    volumes:
+      - ./db/:/var/lib/postgresql/data
+  app:
+    container_name: microblog
+    build: .
+
+    environment:
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db_postgres:${POSTGRES_PORT}/${POSTGRES_DB}
+
+    ports:
+      - "8080:8080"
+
+    depends_on:
+      - db_postgres
+
+
+
