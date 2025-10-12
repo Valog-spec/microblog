@@ -15,8 +15,6 @@ from app.services.user_service import UserService
 
 router = APIRouter(prefix="/api/users", tags=["users"])
 
-logger = get_logger("logger.user_endpoint")
-
 
 @router.post(
     "/create",
@@ -24,11 +22,10 @@ logger = get_logger("logger.user_endpoint")
     response_model=UserBaseSchema,
 )
 async def create_user(
-    user_data: UserCreateRequestSchema,
-    user_service: Annotated[UserService, Depends(get_user_service)],
+        user_data: UserCreateRequestSchema,
+        user_service: Annotated[UserService, Depends(get_user_service)],
 ):
     """Создает нового пользователя с автоматической генерацией API ключа"""
-    logger.info("Создание пользователя: name=%s", user_data.name)
 
     return await user_service.create_user_with_generated_key(user_data=user_data)
 
@@ -37,8 +34,8 @@ async def create_user(
     "/me", summary="Получить информацию и себе", response_model=UserProfileSchema
 )
 async def read_user_me(
-    user_service: Annotated[UserService, Depends(get_user_service)],
-    current_user: User = Depends(get_current_user),
+        user_service: Annotated[UserService, Depends(get_user_service)],
+        current_user: User = Depends(get_current_user),
 ):
     """Возвращает профиль текущего аутентифицированного пользователя"""
     return await user_service.get_user_by_api_key(current_user.api_key)
@@ -50,7 +47,7 @@ async def read_user_me(
     response_model=UserProfileSchema,
 )
 async def read_user(
-    user_id: int, user_service: Annotated[UserService, Depends(get_user_service)]
+        user_id: int, user_service: Annotated[UserService, Depends(get_user_service)]
 ):
     """Возвращает профиль пользователя по указанному ID"""
     return await user_service.get_user(user_id)
@@ -62,9 +59,9 @@ async def read_user(
     response_model=SuccessResponseUserSchema,
 )
 async def follow_user_endpoint(
-    user_id: int,
-    user_service: Annotated[UserService, Depends(get_user_service)],
-    current_user: User = Depends(get_current_user),
+        user_id: int,
+        user_service: Annotated[UserService, Depends(get_user_service)],
+        current_user: User = Depends(get_current_user),
 ):
     """Добавляет подписку текущего пользователя на указанного пользователя"""
     return await user_service.follow_user(current_user.id, user_id)
@@ -76,9 +73,9 @@ async def follow_user_endpoint(
     response_model=SuccessResponseUserSchema,
 )
 async def unfollow_user_endpoint(
-    user_id: int,
-    user_service: Annotated[UserService, Depends(get_user_service)],
-    current_user: User = Depends(get_current_user),
+        user_id: int,
+        user_service: Annotated[UserService, Depends(get_user_service)],
+        current_user: User = Depends(get_current_user),
 ):
     """Удаляет подписку текущего пользователя на указанного пользователя"""
     return await user_service.unfollow_user(current_user.id, user_id)
